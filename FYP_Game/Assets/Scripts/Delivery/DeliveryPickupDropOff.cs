@@ -1,98 +1,138 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class DeliveryPickupDropOff : MonoBehaviour
 {
-    public MissionController missionController;
+    [Header("Pickup and Delivery Points")]
+    public Transform pickupPoint;
+    public Transform[] deliveryPoints;
 
-    void OnTriggerStay(Collider collider)
+    [Header("Interaction Settings")]
+    public KeyCode interactKey = KeyCode.E;
+
+    [Header("UI Elements")]
+    public TextMeshProUGUI scoreText;
+    public TextMeshProUGUI timerText;
+
+    [Header("Scoring and Timer")]
+    public int pointsPerDelivery = 100;
+    public float deliveryTimeLimit = 60f;
+
+    private int score = 0;
+    private float timer;
+    private bool isTimerActive = false;
+
+    private int currentDeliveryIndex = -1;
+    private Transform currentTarget;
+
+    void Start()
     {
-        if(collider.gameObject == missionController.pickupPoint && !missionController.hasPickedUpItems && Input.GetKeyDown(KeyCode.E))
+        UpdateScoreUI();
+
+        foreach (var point in deliveryPoints)
         {
-            missionController.PickupAllItems();
-            Debug.Log("Picked All Items");
+            point.gameObject.SetActive(false);
         }
 
-        if(missionController.hasPickedUpItems && collider.gameObject == missionController.deliveryPoints[missionController.currentDeliveryIndex] && Input.GetKeyDown(KeyCode.E))
+        currentTarget = pickupPoint;
+    }
+
+    void Update()
+    {
+        if (Input.GetKeyDown(interactKey))
         {
-            missionController.CompleteDelivery();
-            Debug.Log("Completed a Delivery");
+            HandleInteraction();
+        }
+
+        if (isTimerActive)
+        {
+            UpdateTimer();
         }
     }
 
-    //public GameObject pickupPizza;
-    //public GameObject seatPizza;
-    //public GameObject dropOffPoint;
+    void HandleInteraction()
+    {
+        if (currentTarget == pickupPoint)
+        {
+            Debug.Log("Pickup Accepted!");
 
-    //private bool isNearPickup = false;
-    //private bool isNearDropOff = false;
-    //private bool hasPizza = false;
+            pickupPoint.gameObject.SetActive(false);
 
-    //void Start()
-    //{
-    //    seatPizza.SetActive(false);
-    //}
+            currentDeliveryIndex = 0;
+            currentTarget = deliveryPoints[currentDeliveryIndex];
+            deliveryPoints[currentDeliveryIndex].gameObject.SetActive(true);
 
-    //void Update()
-    //{
-    //    if(Input.GetKeyDown(KeyCode.E))
-    //    {
-    //        if(isNearPickup && !hasPizza)
-    //        {
-    //            PickUpPizza();
-    //        }
-    //        else if(isNearDropOff && hasPizza)
-    //        {
-    //            DropOffPizza();
-    //        }
-    //    }
-    //}
+            StartTimer();
+        }
+        else if (currentTarget == deliveryPoints[currentDeliveryIndex])
+        {
+            Debug.Log($"Delivery {currentDeliveryIndex + 1} Completed!");
 
-    //void PickUpPizza()
-    //{
-    //    // Picking pizza box
-    //    hasPizza = true;
+            deliveryPoints[currentDeliveryIndex].gameObject.SetActive(false);
 
-    //    // Destroy the pizza box at pickup
-    //    Destroy(pickupPizza);
+            currentDeliveryIndex++;
+            if (currentDeliveryIndex < deliveryPoints.Length)
+            {
+                currentTarget = deliveryPoints[currentDeliveryIndex];
+                deliveryPoints[currentDeliveryIndex].gameObject.SetActive(true);
+            }
+            else
+            {
+                Debug.Log("All Deliveries Completed!");
+                currentTarget = null;
+            }
 
-    //    // Active the hidden pizza box
-    //    seatPizza.SetActive(true);
-    //    Debug.Log("Pizza Pickedup!");
-    //}
+            score += pointsPerDelivery;
+            UpdateScoreUI();
 
-    //void DropOffPizza()
-    //{
-    //    // Pizza box drop off
-    //    hasPizza = false;
 
-    //    // Hide the pizza box on seat
-    //    seatPizza.SetActive(false);
-    //    Debug.Log("Pizza Delivered!");
-    //}
+            if (currentDeliveryIndex >= deliveryPoints.Length)
+            {
+                isTimerActive = false;
+            }
+        }
+    }
 
-    //private void OnTriggerEnter(Collider colliderPizza)
-    //{
-    //    if(colliderPizza.gameObject == pickupPizza)
-    //    {
-    //        isNearPickup = true;
-    //    }
-    //    else if(colliderPizza.gameObject == dropOffPoint && hasPizza)
-    //    {
-    //        isNearDropOff = true;
-    //    }
-    //}
+    void UpdateScoreUI()
+    {
+        scoreText.text = "Delivery Score: " + score;
+    }
 
-    //private void OnTriggerExit(Collider colliderPizza)
-    //{
-    //    if(colliderPizza.gameObject == pickupPizza)
-    //    {
-    //        isNearPickup = false;
-    //    }
-    //    else if(colliderPizza.gameObject == dropOffPoint)
-    //    {
-    //        isNearDropOff = false;
-    //    }
-    //}
+    void StartTimer()
+    {
+        timer = deliveryTimeLimit;
+        isTimerActive = true;
+    }
+
+    void UpdateTimer()
+    {
+        if (timer > 0)
+        {
+            timer -= Time.deltaTime;
+            timerText.text = "Time: " + Mathf.Ceil(timer);
+        }
+        else
+        {
+            isTimerActive = false;
+            Debug.Log("Time's up! Delivery failed.");
+            timerText.text = "Time: 0";
+
+            deliveryPoints[currentDeliveryIndex].gameObject.SetActive(false);
+            currentDeliveryIndex++;
+
+            if (currentDeliveryIndex < deliveryPoints.Length)
+            {
+                currentTarget = deliveryPoints[currentDeliveryIndex];
+                deliveryPoints[currentDeliveryIndex].gameObject.SetActive(true);
+                StartTimer();
+            }
+            else
+            {
+                Debug.Log("All deliveries failed!");
+                currentTarget = null;
+            }
+        }
+    }
 }
