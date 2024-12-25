@@ -7,16 +7,19 @@ public class CoinCollection : MonoBehaviour
 {
     public int coinValue = 1;
 
-    public CoinSpawner coinSpawner;
+    private CoinSpline coinSpline;
+
+    //public CoinSpawner coinSpawner;
 
     void Start()
     {
-        coinSpawner = FindAnyObjectByType<CoinSpawner>();
+        //coinSpawner = FindAnyObjectByType<CoinSpawner>();
+        coinSpline = FindAnyObjectByType<CoinSpline>();
 
-        if(coinSpawner == null)
-        {
-            //Debug.LogError("CoinController not found in the scene. Please add it.");
-        }
+        //if(coinSpawner == null)
+        //{
+        //    //Debug.LogError("CoinController not found in the scene. Please add it.");
+        //}
     }
 
     void OnTriggerEnter(Collider colliderCoin)
@@ -26,7 +29,8 @@ public class CoinCollection : MonoBehaviour
         if(colliderCoin.CompareTag("Player"))
         {
             //Debug.Log("Coin Collected by player");
-            coinSpawner.CollectCoin();
+            //coinSpawner.CollectCoin();
+            coinSpline.CollectCoin();
 
             //GameManager.Instance.AddCoins();
 

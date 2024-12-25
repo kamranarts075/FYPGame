@@ -101,7 +101,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   coinValue: 1
-  coinSpawner: {fileID: 0}
 --- !u!135 &4586637669687330998
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -121,5 +120,5 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.003999176
-  m_Center: {x: -4.656613e-10, y: 0.008000002, z: -6.1118044e-10}
+  m_Radius: 0.009385451
+  m_Center: {x: -4.656613e-10, y: 0.008000002, z: -6.111805e-10}
