@@ -17,7 +17,7 @@ public class DeliveryPickupDropOff : MonoBehaviour
     public TextMeshProUGUI timerText;
 
     [Header("Scoring and Timer")]
-    public int pointsPerDelivery = 100;
+    public int pointsPerDelivery = 10;
     public float deliveryTimeLimit = 60f;
 
     private int score = 0;
@@ -111,13 +111,13 @@ public class DeliveryPickupDropOff : MonoBehaviour
         if (timer > 0)
         {
             timer -= Time.deltaTime;
-            timerText.text = "Time: " + Mathf.Ceil(timer);
+            timerText.text = " : " + Mathf.Ceil(timer);
         }
         else
         {
             isTimerActive = false;
             Debug.Log("Time's up! Delivery failed.");
-            timerText.text = "Time: 0";
+            timerText.text = "00:00";
 
             deliveryPoints[currentDeliveryIndex].gameObject.SetActive(false);
             currentDeliveryIndex++;

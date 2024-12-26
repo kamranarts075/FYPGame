@@ -61,7 +61,7 @@ public class CoinSpline : MonoBehaviour
             currentCoinIndex++;
             ActivateCoin(currentCoinIndex);
 
-            score += 10;
+            score += 2;
             UpdateScoreUI();
         }
     }
