@@ -1,46 +1,62 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
-    public static GameManager Instance;
+    [Header("UI Screens")]
+    public GameObject pauseMenu;
+    public GameObject winScreen;
+    public GameObject loseScreen;
 
-    public Text coinScoreText;
-    public Text deliveriesLeftText;
+    private bool isPaused = false;
 
-    private int coinScore = 0;
-    private int deliveriesLeft = 5;
-
-    private void Awake()
+    void Update()
     {
-        if(Instance == null)
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
-            Instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            Destroy(gameObject);
+            if (isPaused) ResumeGame();
+            else PauseGame();
         }
     }
 
-    void UpdateHUD()
+    public void PauseGame()
     {
-        coinScoreText.text = "Coins: " + coinScore;
-        deliveriesLeftText.text = "Deliveries Left: " + deliveriesLeft;
+        isPaused = true;
+        pauseMenu.SetActive(true);
+        Time.timeScale = 0;
     }
 
-    public void AddCoins()
+    public void ResumeGame()
     {
-        coinScore++;
-        UpdateHUD();
+        isPaused = false;
+        pauseMenu.SetActive(false);
+        Time.timeScale = 1;
     }
 
-    public void CompleteDelivery()
+    public void ShowWinScreen()
     {
-        deliveriesLeft--;
-        UpdateHUD();
+        Time.timeScale = 0;
+        winScreen.SetActive(true);
+    }
+
+    public void ShowLoseScreen()
+    {
+        Time.timeScale = 0;
+        loseScreen.SetActive(true);
+    }
+
+    public void RestartGame()
+    {
+        Time.timeScale = 1;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    public void QuitGame()
+    {
+        Debug.Log("Quitting Game...");
+        Application.Quit();
     }
 }

@@ -17,10 +17,9 @@ public class MainMenuManager : MonoBehaviour
     //    mainMenuPanel.SetActive(true);
     //}
 
-    public void ShowLevelSelection()
+    public void ShowLevelSelection(int levelIndex)
     {
-        HideAllPanels();
-        levelSelectionPanel.SetActive(true);
+        SceneManager.LoadScene("Level" + levelIndex);
     }
 
     public void ShowSetting()

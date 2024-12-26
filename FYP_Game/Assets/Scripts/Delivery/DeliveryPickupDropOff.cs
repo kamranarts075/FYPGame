@@ -20,6 +20,9 @@ public class DeliveryPickupDropOff : MonoBehaviour
     public int pointsPerDelivery = 10;
     public float deliveryTimeLimit = 60f;
 
+    public GameObject loseScreen;
+    public GameObject winScreen;
+
     private int score = 0;
     private float timer;
     private bool isTimerActive = false;
@@ -81,7 +84,7 @@ public class DeliveryPickupDropOff : MonoBehaviour
             else
             {
                 Debug.Log("All Deliveries Completed!");
-                currentTarget = null;
+                ShowWinScreen();
             }
 
             score += pointsPerDelivery;
@@ -93,6 +96,12 @@ public class DeliveryPickupDropOff : MonoBehaviour
                 isTimerActive = false;
             }
         }
+    }
+
+    void ShowWinScreen()
+    {
+        Time.timeScale = 0; // Freeze the game
+        winScreen.SetActive(true); // Show Win Screen
     }
 
     void UpdateScoreUI()
@@ -122,17 +131,13 @@ public class DeliveryPickupDropOff : MonoBehaviour
             deliveryPoints[currentDeliveryIndex].gameObject.SetActive(false);
             currentDeliveryIndex++;
 
-            if (currentDeliveryIndex < deliveryPoints.Length)
-            {
-                currentTarget = deliveryPoints[currentDeliveryIndex];
-                deliveryPoints[currentDeliveryIndex].gameObject.SetActive(true);
-                StartTimer();
-            }
-            else
-            {
-                Debug.Log("All deliveries failed!");
-                currentTarget = null;
-            }
+            ShowLoseScreen();
         }
+    }
+
+    void ShowLoseScreen()
+    {
+        Time.timeScale = 0; // Freeze the game
+        loseScreen.SetActive(true); // Show Lose Screen
     }
 }
