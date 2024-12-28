@@ -48,15 +48,28 @@ public class GameManager : MonoBehaviour
         loseScreen.SetActive(true);
     }
 
-    public void RestartGame()
+    public void RestartGame(int levelIndex)
     {
         Time.timeScale = 1;
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        SceneManager.LoadScene("Level" + levelIndex);
     }
 
-    public void QuitGame()
+    public void NextLevel(int levelIndex)
     {
-        Debug.Log("Quitting Game...");
-        Application.Quit();
+        Time.timeScale = 1;
+        SceneManager.LoadScene("Level" + levelIndex);
     }
+
+    public void MainMenu(int levelIndex)
+    {
+        Time.timeScale = 1;
+        SceneManager.LoadScene("Level" + levelIndex);
+    }
+
+    //public void QuitGame()
+    //{
+    //    Debug.Log("Quitting Game...");
+    //    Application.Quit();
+    //}
 }

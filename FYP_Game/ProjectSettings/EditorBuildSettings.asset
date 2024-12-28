@@ -6,11 +6,17 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/SplashScreen.unity
+    guid: 3d8f6accf9d0a1f4cb73ea7641ca3749
+  - enabled: 1
     path: Assets/Scenes/GameUI.unity
     guid: 7f2036c32157a174397cdd7c487e8fe8
   - enabled: 1
     path: Assets/Scenes/Level1.unity
     guid: c9c344d7225a399498be76bbd12eb653
+  - enabled: 1
+    path: Assets/Scenes/Level2.unity
+    guid: 4a3b10a59b2ae784bb192f3ed3e8c2b8
   m_configObjects:
     com.unity.adaptiveperformance.simulator.provider_settings: {fileID: 11400000, guid: 1e7411da0c5b61e478d9c76ffb235867, type: 2}
   m_UseUCBPForAssetBundles: 0

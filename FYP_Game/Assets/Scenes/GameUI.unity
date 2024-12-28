@@ -1625,7 +1625,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 370936293}
-  - component: {fileID: 370936292}
   m_Layer: 0
   m_Name: CoinManager
   m_TagString: Untagged
@@ -1633,19 +1632,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &370936292
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 370936291}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6f879512a865eda408fce3a6fd496ea8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  coinBalanceText: {fileID: 0}
 --- !u!4 &370936293
 Transform:
   m_ObjectHideFlags: 0
@@ -2542,7 +2528,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1683034857}
   m_Direction: 0
   m_MinValue: 0
-  m_MaxValue: 1
+  m_MaxValue: 100
   m_WholeNumbers: 1
   m_Value: 0
   m_OnValueChanged:
@@ -5394,7 +5380,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1584025964}
   m_Direction: 0
   m_MinValue: 0
-  m_MaxValue: 1
+  m_MaxValue: 100
   m_WholeNumbers: 1
   m_Value: 0
   m_OnValueChanged:
@@ -6323,8 +6309,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   graphicsSlider: {fileID: 1367004334}
-  soundSlider: {fileID: 0}
-  musicSlider: {fileID: 0}
+  soundSlider: {fileID: 490919136}
+  musicSlider: {fileID: 1153298037}
 --- !u!4 &1457047260
 Transform:
   m_ObjectHideFlags: 0
